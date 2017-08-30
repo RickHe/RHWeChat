@@ -45,7 +45,6 @@ static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBec
         openCount = 0;
     }
     NSDate *currentDate = [NSDate date];
-    [[NSUserDefaults standardUserDefaults] setObject:currentDate forKey:@"date"];
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
     
     if ([self rh_isSameDay:currentDate
@@ -55,6 +54,7 @@ static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBec
         openCount = 1;
     }
     
+    [[NSUserDefaults standardUserDefaults] setObject:currentDate forKey:@"date"];
     [[NSUserDefaults standardUserDefaults] setInteger:openCount forKey:@"openCount"];
     
     
