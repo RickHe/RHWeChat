@@ -1,4 +1,4 @@
-#line 1 "/Users/hmy2015/Desktop/iOSNormal/Project/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
+#line 1 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
 
 
 #import <UIKit/UIKit.h>
@@ -34,7 +34,7 @@
 @class MicroMessengerAppDelegate; 
 static void (*_logos_orig$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$)(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, id); static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, id); static BOOL _logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date2$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, NSDate*, NSDate*); 
 
-#line 12 "/Users/hmy2015/Desktop/iOSNormal/Project/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
+#line 12 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
 
 
 static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, id arg1){
@@ -84,4 +84,4 @@ static BOOL _logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date
 
 static __attribute__((constructor)) void _logosLocalInit() {
 {Class _logos_class$_ungrouped$MicroMessengerAppDelegate = objc_getClass("MicroMessengerAppDelegate"); MSHookMessageEx(_logos_class$_ungrouped$MicroMessengerAppDelegate, @selector(applicationDidBecomeActive:), (IMP)&_logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$, (IMP*)&_logos_orig$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$);{ char _typeEncoding[1024]; unsigned int i = 0; memcpy(_typeEncoding + i, @encode(BOOL), strlen(@encode(BOOL))); i += strlen(@encode(BOOL)); _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(NSDate*), strlen(@encode(NSDate*))); i += strlen(@encode(NSDate*)); memcpy(_typeEncoding + i, @encode(NSDate*), strlen(@encode(NSDate*))); i += strlen(@encode(NSDate*)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$MicroMessengerAppDelegate, @selector(rh_isSameDay:date2:), (IMP)&_logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date2$, _typeEncoding); }} }
-#line 59 "/Users/hmy2015/Desktop/iOSNormal/Project/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
+#line 59 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
