@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9948DFD1F5D7EC70004B3A5 /* RHConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */; };
+		F9948DFE1F5D7EC70004B3A5 /* RHConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */; };
 		F99B5CB51F55A29E003CC6F8 /* put ipa or app here in Resources */ = {isa = PBXBuildFile; fileRef = F99B5CB41F55A29E003CC6F8 /* put ipa or app here */; };
 		F99B5CBF1F55A29E003CC6F8 /* Cycript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F99B5CBE1F55A29E003CC6F8 /* Cycript.framework */; };
 		F99B5CC11F55A29E003CC6F8 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F99B5CC01F55A29E003CC6F8 /* JavaScriptCore.framework */; };
@@ -33,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RHConfig.h; sourceTree = "<group>"; };
+		F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RHConfig.m; sourceTree = "<group>"; };
 		F99B5CB01F55A29E003CC6F8 /* RHWeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RHWeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F99B5CB41F55A29E003CC6F8 /* put ipa or app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put ipa or app here"; path = "TargetApp/put ipa or app here"; sourceTree = "<group>"; };
 		F99B5CB61F55A29E003CC6F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				F99B5CD71F55A29F003CC6F8 /* RHWeChatDylib.mm */,
 				F99B5CD91F55A29F003CC6F8 /* RHWeChatDylib.h */,
 				F99B5CDB1F55A29F003CC6F8 /* RHWeChatDylib.m */,
+				F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */,
+				F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */,
 				F99B5CCB1F55A29F003CC6F8 /* CaptainHook */,
 				F99B5CCE1F55A29F003CC6F8 /* AntiAntiDebug */,
 				F99B5CD11F55A29F003CC6F8 /* fishhook */,
@@ -179,6 +185,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9948DFD1F5D7EC70004B3A5 /* RHConfig.h in Headers */,
 				F99B5CDA1F55A29F003CC6F8 /* RHWeChatDylib.h in Headers */,
 				F99B5CCD1F55A29F003CC6F8 /* CaptainHook.h in Headers */,
 				F99B5CD51F55A29F003CC6F8 /* fishhook.h in Headers */,
@@ -316,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9948DFE1F5D7EC70004B3A5 /* RHConfig.m in Sources */,
 				F99B5CDC1F55A29F003CC6F8 /* RHWeChatDylib.m in Sources */,
 				F99B5CD81F55A29F003CC6F8 /* RHWeChatDylib.mm in Sources */,
 				F99B5CD31F55A29F003CC6F8 /* fishhook.c in Sources */,
@@ -427,8 +435,10 @@
 		F99B5CE01F55A29F003CC6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = YES;
 				DEVELOPMENT_TEAM = U548S69Z84;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				INFOPLIST_FILE = RHWeChat/Info.plist;
 				MONKEYDEV_CLASS_DUMP = YES;
 				MONKEYDEV_RESTORE_SYMBOL = YES;
@@ -441,8 +451,10 @@
 		F99B5CE11F55A29F003CC6F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = YES;
 				DEVELOPMENT_TEAM = U548S69Z84;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				INFOPLIST_FILE = RHWeChat/Info.plist;
 				MONKEYDEV_CLASS_DUMP = YES;
 				MONKEYDEV_RESTORE_SYMBOL = YES;
@@ -455,10 +467,12 @@
 		F99B5CE31F55A29F003CC6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = YES;
 				DEVELOPMENT_TEAM = U548S69Z84;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -507,11 +521,13 @@
 		F99B5CE41F55A29F003CC6F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = YES;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = U548S69Z84;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (

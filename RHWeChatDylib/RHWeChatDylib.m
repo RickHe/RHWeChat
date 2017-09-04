@@ -12,10 +12,18 @@
 #import "CaptainHook.h"
 #import <UIKit/UIKit.h>
 #import <Cycript/Cycript.h>
+#import "RHConfig.h"
 
 #define RHParamKey @"RHParamKey"
 #define RHIsAutoOpenKey @"RHIsAutoOpenKey"
 #define RHUserDefaults [NSUserDefaults standardUserDefaults]
+
+
+CHDeclareClass(MMTableViewInfo);
+CHDeclareClass(MMTableView);
+CHDeclareClass(MMTableViewCellInfo);
+CHDeclareClass(MMTableViewSectionInfo);
+
 
 static __attribute__((constructor)) void entry(){
     NSLog(@"\n               🎉!!！congratulations!!！🎉\n👍----------------insert dylib success----------------👍");
@@ -62,11 +70,12 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
             id m_nsUsrName = object_getIvar(selfContact, nsUsrNameIvar);
             BOOL isMesasgeFromMe = NO;
             BOOL isChatroom = NO;
+            
             if ([m_nsFromUsr isEqualToString:m_nsUsrName]) {
                 isMesasgeFromMe = YES;
             }
-            if ([m_nsFromUsr rangeOfString:@"@chatroom"].location != NSNotFound)
-            {
+            
+            if ([m_nsFromUsr rangeOfString:@"@chatroom"].location != NSNotFound) {
                 isChatroom = YES;
             }
             
@@ -74,19 +83,20 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
                 return;
             }
             
-            if ([m_nsContent rangeOfString:@"wxpay://"].location != NSNotFound)
-            {
+            if ([m_nsContent rangeOfString:@"wxpay://"].location != NSNotFound) {
+                if (!kRHConfig.isAutoGrapEnv) {
+                    return;
+                }
+                
                 NSString *nativeUrl = m_nsContent;
                 NSRange rangeStart = [m_nsContent rangeOfString:@"wxpay://c2cbizmessagehandler/hongbao"];
-                if (rangeStart.location != NSNotFound)
-                {
+                if (rangeStart.location != NSNotFound) {
                     NSUInteger locationStart = rangeStart.location;
                     nativeUrl = [nativeUrl substringFromIndex:locationStart];
                 }
                 
                 NSRange rangeEnd = [nativeUrl rangeOfString:@"]]"];
-                if (rangeEnd.location != NSNotFound)
-                {
+                if (rangeEnd.location != NSNotFound) {
                     NSUInteger locationEnd = rangeEnd.location;
                     nativeUrl = [nativeUrl substringToIndex:locationEnd];
                 }
@@ -209,6 +219,25 @@ CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonRespon
     }
 }
 
+#pragma mark - NewSettingViewController
+CHDeclareClass(NewSettingViewController)
+
+CHOptimizedMethod0(self, void, NewSettingViewController, reloadTableData) {
+    CHSuper0(NewSettingViewController, reloadTableData);
+    MMTableViewInfo *tableInfo = [self valueForKey:@"m_tableViewInfo"];
+    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoDefaut];
+    
+    MMTableViewCellInfo *autoGrapRedEnvCellInfo = [objc_getClass("MMTableViewCellInfo") switchCellForSel:@selector(autoGrabEnvSwitchAction:)
+                                                                                 target:kRHConfig
+                                                                                  title:@"自动抢红包"
+                                                                                     on:kRHConfig.isAutoGrapEnv];
+    [sectionInfo addCell:autoGrapRedEnvCellInfo];
+    
+    [tableInfo insertSection:sectionInfo At:0];
+    MMTableView *tableView = [tableInfo getTableView];
+    [tableView reloadData];
+}
+
 #pragma mark - CHConstructor
 
 CHConstructor{
@@ -218,5 +247,13 @@ CHConstructor{
     CHLoadLateClass(WCRedEnvelopesLogicMgr);
     CHClassHook2(WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonResponse, Request);
     CHClassHook1(WCRedEnvelopesLogicMgr, ReceiverQueryRedEnvelopesRequest);
+    
+    CHLoadLateClass(NewSettingViewController);
+    CHClassHook0(NewSettingViewController, reloadTableData);
+    
+    CHLoadLateClass(MMTableViewInfo);
+    CHLoadLateClass(MMTableView);
+    CHLoadLateClass(MMTableViewCellInfo);
+    CHLoadLateClass(MMTableViewSectionInfo);
 }
 

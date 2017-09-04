@@ -9,6 +9,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface CMessageMgr
 
@@ -35,3 +36,38 @@
 @property(retain, nonatomic) SKBuiltinBuffer_t *retText; // @dynamic retText;
 
 @end
+
+@interface MMTableViewInfo : NSObject
+
+- (void)insertSection:(id)arg1 At:(unsigned int)arg2;
+- (id)getTableView;
+
+@end
+
+@interface MMTableView : UITableView
+
+@end
+
+@interface MMTableViewCellInfo 
+
++ (id)switchCellForSel:(SEL)arg1
+                target:(id)arg2
+                 title:(id)arg3
+                    on:(_Bool)arg4;
+
+@end
+
+@interface MMTableViewSectionInfo
+
++ (id)sectionInfoDefaut;
+- (void)addCell:(id)arg1;
+
+@end
+
+@interface NewSettingViewController : NSObject
+
+- (void)reloadTableData;
+
+@end
+
+
