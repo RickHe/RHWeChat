@@ -26,12 +26,7 @@ static __attribute__((constructor)) void entry(){
     }];
 }
 
-@interface CMessageMgr
-
-- (void)AsyncOnAddMsg:(id)arg1 MsgWrap:(id)arg2;
-
-@end
-
+#pragma mark - CMessageMgr
 CHDeclareClass(CMessageMgr);
 
 CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
@@ -157,25 +152,7 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
     }
 }
 
-@interface SKBuiltinBuffer_t
-
-@property(retain, nonatomic) NSData *buffer; // @dynamic buffer
-
-@end
-
-@interface WCRedEnvelopesLogicMgr
-
-- (void)OnWCToHongbaoCommonResponse:(id)arg1 Request:(id)arg2;
-- (void)ReceiverQueryRedEnvelopesRequest:(id)arg1;
-
-@property(nonatomic) int cgiCmdid; // @dynamic cgiCmdid;
-@property(retain, nonatomic) NSString *errorMsg; // @dynamic errorMsg;
-@property(nonatomic) int errorType; // @dynamic errorType;
-@property(retain, nonatomic) NSString *platMsg; // @dynamic platMsg;
-@property(nonatomic) int platRet; // @dynamic platRet;
-@property(retain, nonatomic) SKBuiltinBuffer_t *retText; // @dynamic retText;
-
-@end
+#pragma mark - WCRedEnvelopesLogicMgr
 
 CHDeclareClass(WCRedEnvelopesLogicMgr);
 
@@ -231,6 +208,8 @@ CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonRespon
         }
     }
 }
+
+#pragma mark - CHConstructor
 
 CHConstructor{
     CHLoadLateClass(CMessageMgr);
