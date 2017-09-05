@@ -68,21 +68,11 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
             
             Ivar nsUsrNameIvar = class_getInstanceVariable([selfContact class], "m_nsUsrName");
             id m_nsUsrName = object_getIvar(selfContact, nsUsrNameIvar);
-            BOOL isMesasgeFromMe = NO;
-            BOOL isChatroom = NO;
             
             if ([m_nsFromUsr isEqualToString:m_nsUsrName]) {
-                isMesasgeFromMe = YES;
-            }
-            
-            if ([m_nsFromUsr rangeOfString:@"@chatroom"].location != NSNotFound) {
-                isChatroom = YES;
-            }
-            
-            if (isMesasgeFromMe) {
                 return;
             }
-            
+           
             if ([m_nsContent rangeOfString:@"wxpay://"].location != NSNotFound) {
                 if (!kRHConfig.isAutoGrapEnv) {
                     return;
