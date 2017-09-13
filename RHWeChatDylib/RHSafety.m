@@ -1,14 +1,14 @@
 //
-//  Safety.m
-//  IM_Expensive
+//  RHSafety.h
+//  RHWeChat
 //
-//  Created by 蔡士章 on 15/10/2.
-//  Copyright © 2015年 szcai. All rights reserved.
+//  Created by hmy2015 on 2017/9/4.
+//  Copyright © 2017年 何米颖. All rights reserved.
 //
 
-#import "Safety.h"
+#import "RHSafety.h"
 
-@implementation NSArray (Safety)
+@implementation NSArray (RHSafety)
 
 - (id)SafetyObjectAtIndex:(NSUInteger)index
 {
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation NSMutableArray (Safety)
+@implementation NSMutableArray (RHSafety)
 
 - (BOOL)SafetyAddObject:(id)anObject
 {
@@ -74,7 +74,7 @@
 }
 @end
 
-@implementation NSMutableDictionary (Safety)
+@implementation NSMutableDictionary (RHSafety)
 
 - (void)SafetySetObject:(id)anObject forKey:(id <NSCopying>)aKey
 {
@@ -86,7 +86,7 @@
 
 @end
 
-@implementation NSCalendar(Safety)
+@implementation NSCalendar(RHSafety)
 - (NSDate *)safeDateFromComponents:(NSDateComponents *)comps{
     return (comps != nil) ? [self dateFromComponents:comps] : nil;
 }

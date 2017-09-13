@@ -1,9 +1,9 @@
 //
-//  Safety.h
-//  IM_Expensive
+//  RHSafety.h
+//  RHWeChat
 //
-//  Created by 蔡士章 on 15/10/2.
-//  Copyright © 2015年 szcai. All rights reserved.
+//  Created by hmy2015 on 2017/9/4.
+//  Copyright © 2017年 何米颖. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,7 +11,7 @@
 /*
  * NSArray
  */
-@interface NSArray (Safety)
+@interface NSArray (RHSafety)
 - (id)SafetyObjectAtIndex:(NSUInteger)index;
 @end
 
@@ -19,7 +19,7 @@
 /*
  * NSMutableArray
  */
-@interface NSMutableArray (Safety)
+@interface NSMutableArray (RHSafety)
 - (BOOL)SafetyAddObject:(id)anObject;
 - (BOOL)SafetyInsertObject:(id)anObject atIndex:(NSUInteger)index;
 - (BOOL)SafetyRemoveObject:(id)anObject;
@@ -30,11 +30,11 @@
 /*
  * NSMutableDictionary
  */
-@interface NSMutableDictionary (Safety)
+@interface NSMutableDictionary (RHSafety)
 - (void)SafetySetObject:(id)anObject forKey:(id <NSCopying>)aKey;
 @end
 
-@interface NSCalendar(Safety)
+@interface NSCalendar(RHSafety)
 - (NSDate *)safeDateFromComponents:(NSDateComponents *)comps;
 - (NSDateComponents *)safeComponents:(NSCalendarUnit)unitFlags fromDate:(NSDate *)date;
 @end
