@@ -48,8 +48,8 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2) {
     
     switch(m_uiMessageType) {
         case 49: {
-            id logicMgr = [[MMServiceCenter defaultCenter] getService:[WCRedEnvelopesLogicMgr class]];
-            id contactManager =[[MMServiceCenter defaultCenter] getService:[CContactMgr class]];
+            id logicMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("WCRedEnvelopesLogicMgr")];
+            id contactManager =[[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("CContactMgr")];
             id selfContact = [contactManager getSelfContact];
             id m_nsUsrName = [selfContact m_nsUsrName];
             
@@ -181,7 +181,7 @@ CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonRespon
                                 [RHUserDefaults setObject:[NSMutableDictionary dictionary] forKey:RHParamKey];
                                 [params SafetySetObject:idTemp forKey:@"timingIdentifier"]; // "timingIdentifier"字段
                                 
-                                id logicMgr = [[MMServiceCenter defaultCenter] getService:[WCRedEnvelopesLogicMgr class]];
+                                id logicMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("WCRedEnvelopesLogicMgr")];
                                 
                                 dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
                                 dispatch_after(delayTime, dispatch_get_main_queue(), ^(void) {
