@@ -7,3 +7,5 @@
 * [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev)
 * [Reveal4](https://revealapp.com/)
 * [cycript](http://www.cycript.org/)
+
+[我是怎样一步一步实现微信自动抢红包的？](http://www.jianshu.com/p/294ed954d8b3)
