@@ -10,10 +10,8 @@
 
 @implementation NSArray (RHSafety)
 
-- (id)SafetyObjectAtIndex:(NSUInteger)index
-{
-    if (self.count <= index)
-    {
+- (id)SafetyObjectAtIndex:(NSUInteger)index {
+    if (self.count <= index) {
         return nil;
     }
     return [self objectAtIndex:index];
@@ -23,55 +21,46 @@
 
 @implementation NSMutableArray (RHSafety)
 
-- (BOOL)SafetyAddObject:(id)anObject
-{
-    if (anObject)
-    {
+- (BOOL)SafetyAddObject:(id)anObject {
+    if (anObject) {
         [self addObject:anObject];
         return YES;
     }
     return NO;
 }
 
-- (BOOL)SafetyInsertObject:(id)anObject atIndex:(NSUInteger)index
-{
-    if (!anObject || self.count <= index)
-    {
+- (BOOL)SafetyInsertObject:(id)anObject atIndex:(NSUInteger)index {
+    if (!anObject || self.count <= index) {
         return NO;
     }
     [self insertObject:anObject atIndex:index];
     return YES;
 }
 
-- (BOOL)SafetyRemoveObject:(id)anObject
-{
-    if(anObject && [self containsObject:anObject])
-    {
+- (BOOL)SafetyRemoveObject:(id)anObject {
+    if(anObject && [self containsObject:anObject]) {
         [self removeObject:anObject];
         return YES;
     }
     return NO;
 }
 
-- (BOOL)SafetyRemoveObjectAtIndex:(NSUInteger)index
-{
-    if (self.count <= index)
-    {
+- (BOOL)SafetyRemoveObjectAtIndex:(NSUInteger)index {
+    if (self.count <= index) {
         return NO;
     }
     [self removeObjectAtIndex:index];
     return YES;
 }
 
-- (BOOL)SafetyReplaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
-{
-    if (self.count <= index || !anObject)
-    {
+- (BOOL)SafetyReplaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject {
+    if (self.count <= index || !anObject) {
         return NO;
     }
     [self replaceObjectAtIndex:index withObject:anObject];
     return YES;
 }
+
 @end
 
 @implementation NSMutableDictionary (RHSafety)
