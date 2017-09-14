@@ -3,13 +3,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MicroMessengerAppDelegate
-
-
-- (BOOL)rh_isSameDay:(NSDate*)date1 date2:(NSDate*)date2;
-
-@end
-
 
 #include <substrate.h>
 #if defined(__clang__)
@@ -31,57 +24,18 @@
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class MicroMessengerAppDelegate; 
-static void (*_logos_orig$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$)(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, id); static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, id); static BOOL _logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date2$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST, SEL, NSDate*, NSDate*); 
+@class WCBizUtil; 
+static id (*_logos_meta_orig$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$)(_LOGOS_SELF_TYPE_NORMAL Class _LOGOS_SELF_CONST, SEL, id, id); static id _logos_meta_method$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$(_LOGOS_SELF_TYPE_NORMAL Class _LOGOS_SELF_CONST, SEL, id, id); 
 
-#line 12 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
-
-
-static void _logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, id arg1){
-    _logos_orig$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$(self, _cmd, arg1);
-
-    NSInteger openCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"openCount"];
-    if (!openCount) {
-        openCount = 0;
-    }
-    NSDate *currentDate = [NSDate date];
-    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
-    
-    if ([self rh_isSameDay:currentDate
-                     date2:date]) {
-        openCount++;
-    } else {
-        openCount = 1;
-    }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:currentDate forKey:@"date"];
-    [[NSUserDefaults standardUserDefaults] setInteger:openCount forKey:@"openCount"];
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                    message:[NSString stringWithFormat:@"朋友这是你今天第%li次打开 app 了", openCount]
-                                                   delegate:self
-                                          cancelButtonTitle:@"确认"
-                                          otherButtonTitles:nil];
-    
-    [alert show];
-}
+#line 5 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
 
 
-
-static BOOL _logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date2$(_LOGOS_SELF_TYPE_NORMAL MicroMessengerAppDelegate* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, NSDate* date1, NSDate* date2) {
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:date1];
-    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date2];
-    
-    return [comp1 day]   == [comp2 day] &&
-    [comp1 month] == [comp2 month] &&
-    [comp1 year]  == [comp2 year];
+static id _logos_meta_method$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$(_LOGOS_SELF_TYPE_NORMAL Class _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, id arg1, id arg2) {
+    HBLogDebug(@"+[<WCBizUtil: %p> dictionaryWithDecodedComponets:%@ separator:%@]", self, arg1, arg2);
+    return _logos_meta_orig$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$(self, _cmd, arg1, arg2);
 }
 
 
 static __attribute__((constructor)) void _logosLocalInit() {
-{Class _logos_class$_ungrouped$MicroMessengerAppDelegate = objc_getClass("MicroMessengerAppDelegate"); MSHookMessageEx(_logos_class$_ungrouped$MicroMessengerAppDelegate, @selector(applicationDidBecomeActive:), (IMP)&_logos_method$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$, (IMP*)&_logos_orig$_ungrouped$MicroMessengerAppDelegate$applicationDidBecomeActive$);{ char _typeEncoding[1024]; unsigned int i = 0; memcpy(_typeEncoding + i, @encode(BOOL), strlen(@encode(BOOL))); i += strlen(@encode(BOOL)); _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(NSDate*), strlen(@encode(NSDate*))); i += strlen(@encode(NSDate*)); memcpy(_typeEncoding + i, @encode(NSDate*), strlen(@encode(NSDate*))); i += strlen(@encode(NSDate*)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$MicroMessengerAppDelegate, @selector(rh_isSameDay:date2:), (IMP)&_logos_method$_ungrouped$MicroMessengerAppDelegate$rh_isSameDay$date2$, _typeEncoding); }} }
-#line 59 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
+{Class _logos_class$_ungrouped$WCBizUtil = objc_getClass("WCBizUtil"); Class _logos_metaclass$_ungrouped$WCBizUtil = object_getClass(_logos_class$_ungrouped$WCBizUtil); MSHookMessageEx(_logos_metaclass$_ungrouped$WCBizUtil, @selector(dictionaryWithDecodedComponets:separator:), (IMP)&_logos_meta_method$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$, (IMP*)&_logos_meta_orig$_ungrouped$WCBizUtil$dictionaryWithDecodedComponets$separator$);} }
+#line 13 "/Users/DaFenQI/Desktop/RHWeChat/RHWeChatDylib/RHWeChatDylib.xm"
