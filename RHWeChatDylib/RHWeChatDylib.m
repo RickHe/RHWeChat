@@ -181,6 +181,11 @@ CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonRespon
                                 [RHUserDefaults setObject:[NSMutableDictionary dictionary] forKey:RHParamKey];
                                 [params SafetySetObject:idTemp forKey:@"timingIdentifier"]; // "timingIdentifier"字段
                                 
+                                // 防止重复请求
+                                if (params.allKeys.count < 2) {
+                                    return;
+                                }
+                                
                                 id logicMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("WCRedEnvelopesLogicMgr")];
                                 
                                 dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
