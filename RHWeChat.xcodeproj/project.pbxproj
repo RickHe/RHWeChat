@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E7BFDA251F694235008CAB33 /* RHSafety.h in Headers */ = {isa = PBXBuildFile; fileRef = E7BFDA231F694235008CAB33 /* RHSafety.h */; };
+		E7BFDA261F694235008CAB33 /* RHSafety.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BFDA241F694235008CAB33 /* RHSafety.m */; };
 		F9948DFD1F5D7EC70004B3A5 /* RHConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */; };
 		F9948DFE1F5D7EC70004B3A5 /* RHConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */; };
 		F99B5CB51F55A29E003CC6F8 /* put ipa or app here in Resources */ = {isa = PBXBuildFile; fileRef = F99B5CB41F55A29E003CC6F8 /* put ipa or app here */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E7BFDA231F694235008CAB33 /* RHSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RHSafety.h; sourceTree = "<group>"; };
+		E7BFDA241F694235008CAB33 /* RHSafety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RHSafety.m; sourceTree = "<group>"; };
 		F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RHConfig.h; sourceTree = "<group>"; };
 		F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RHConfig.m; sourceTree = "<group>"; };
 		F99B5CB01F55A29E003CC6F8 /* RHWeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RHWeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +141,8 @@
 				F99B5CDB1F55A29F003CC6F8 /* RHWeChatDylib.m */,
 				F9948DFB1F5D7EC70004B3A5 /* RHConfig.h */,
 				F9948DFC1F5D7EC70004B3A5 /* RHConfig.m */,
+				E7BFDA231F694235008CAB33 /* RHSafety.h */,
+				E7BFDA241F694235008CAB33 /* RHSafety.m */,
 				F99B5CCB1F55A29F003CC6F8 /* CaptainHook */,
 				F99B5CCE1F55A29F003CC6F8 /* AntiAntiDebug */,
 				F99B5CD11F55A29F003CC6F8 /* fishhook */,
@@ -185,6 +191,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7BFDA251F694235008CAB33 /* RHSafety.h in Headers */,
 				F9948DFD1F5D7EC70004B3A5 /* RHConfig.h in Headers */,
 				F99B5CDA1F55A29F003CC6F8 /* RHWeChatDylib.h in Headers */,
 				F99B5CCD1F55A29F003CC6F8 /* CaptainHook.h in Headers */,
@@ -326,6 +333,7 @@
 				F9948DFE1F5D7EC70004B3A5 /* RHConfig.m in Sources */,
 				F99B5CDC1F55A29F003CC6F8 /* RHWeChatDylib.m in Sources */,
 				F99B5CD81F55A29F003CC6F8 /* RHWeChatDylib.mm in Sources */,
+				E7BFDA261F694235008CAB33 /* RHSafety.m in Sources */,
 				F99B5CD31F55A29F003CC6F8 /* fishhook.c in Sources */,
 				F99B5CD01F55A29F003CC6F8 /* AntiAntiDebug.m in Sources */,
 			);

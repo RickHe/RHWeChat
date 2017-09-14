@@ -5,7 +5,7 @@
 //  RHWeChatDylib
 //
 //  Created by hmy2015 on 2017/8/29.
-//  Copyright (c) 2017年 何米颖大天才. All rights reserved.
+//  Copyright (c) 2017年 何米颖. All rights reserved.
 //
 
 #import "RHWeChatDylib.h"
@@ -13,6 +13,7 @@
 #import <UIKit/UIKit.h>
 #import <Cycript/Cycript.h>
 #import "RHConfig.h"
+#import "RHSafety.h"
 
 #define RHParamKey @"RHParamKey"
 #define RHIsAutoOpenKey @"RHIsAutoOpenKey"
@@ -37,52 +38,25 @@ static __attribute__((constructor)) void entry(){
 #pragma mark - CMessageMgr
 CHDeclareClass(CMessageMgr);
 
-CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
-{
+CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2) {
     CHSuper(2, CMessageMgr, AsyncOnAddMsg, arg1, MsgWrap, arg2);
-    Ivar uiMessageTypeIvar = class_getInstanceVariable(objc_getClass("CMessageWrap"), "m_uiMessageType");
-    ptrdiff_t offset = ivar_getOffset(uiMessageTypeIvar);
-    unsigned char *stuffBytes = (unsigned char *)(__bridge void *)arg2;
-    NSUInteger m_uiMessageType = * ((NSUInteger *)(stuffBytes + offset));
+
+    NSUInteger m_uiMessageType = [arg2 m_uiMessageType];
     
-    Ivar nsFromUsrIvar = class_getInstanceVariable(objc_getClass("CMessageWrap"), "m_nsFromUsr");
-    id m_nsFromUsr = object_getIvar(arg2, nsFromUsrIvar);
-    
-    Ivar nsContentIvar = class_getInstanceVariable(objc_getClass("CMessageWrap"), "m_nsContent");
-    id m_nsContent = object_getIvar(arg2, nsContentIvar);
+    id m_nsFromUsr = [arg2 m_nsFromUsr];
+    id m_nsContent = [arg2 m_nsContent];
     
     switch(m_uiMessageType) {
         case 49: {
-            //微信的服务中心
-            Method methodMMServiceCenter = class_getClassMethod(objc_getClass("MMServiceCenter"), @selector(defaultCenter));
-            IMP impMMSC = method_getImplementation(methodMMServiceCenter);
-            id MMServiceCenter = impMMSC(objc_getClass("MMServiceCenter"), @selector(defaultCenter));
-            //红包控制器
-            id logicMgr = ((id (*)(id, SEL, Class))objc_msgSend)(MMServiceCenter, @selector(getService:),objc_getClass("WCRedEnvelopesLogicMgr"));
-            //通讯录管理器
-            id contactManager = ((id (*)(id, SEL, Class))objc_msgSend)(MMServiceCenter, @selector(getService:),objc_getClass("CContactMgr"));
-            
-            Method methodGetSelfContact = class_getInstanceMethod(objc_getClass("CContactMgr"), @selector(getSelfContact));
-            IMP impGS = method_getImplementation(methodGetSelfContact);
-            id selfContact = impGS(contactManager, @selector(getSelfContact));
-            
-            Ivar nsUsrNameIvar = class_getInstanceVariable([selfContact class], "m_nsUsrName");
-            id m_nsUsrName = object_getIvar(selfContact, nsUsrNameIvar);
-            BOOL isMesasgeFromMe = NO;
-            BOOL isChatroom = NO;
+            id logicMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("WCRedEnvelopesLogicMgr")];
+            id contactManager =[[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("CContactMgr")];
+            id selfContact = [contactManager getSelfContact];
+            id m_nsUsrName = [selfContact m_nsUsrName];
             
             if ([m_nsFromUsr isEqualToString:m_nsUsrName]) {
-                isMesasgeFromMe = YES;
-            }
-            
-            if ([m_nsFromUsr rangeOfString:@"@chatroom"].location != NSNotFound) {
-                isChatroom = YES;
-            }
-            
-            if (isMesasgeFromMe) {
                 return;
             }
-            
+           
             if ([m_nsContent rangeOfString:@"wxpay://"].location != NSNotFound) {
                 if (!kRHConfig.isAutoGrapEnv) {
                     return;
@@ -112,26 +86,26 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
                         continue;
                     NSString *key = [currentPair substringToIndex:range.location];
                     NSString *value =[currentPair substringFromIndex:range.location + 1];
-                    [parameters setObject:value forKey:key];
+                    [parameters SafetySetObject:value forKey:key];
                 }
                 
                 //红包参数
                 NSMutableDictionary *params = [@{} mutableCopy];
                 
-                [params setObject:parameters[@"msgtype"]?:@"null" forKey:@"msgType"];
-                [params setObject:parameters[@"sendid"]?:@"null" forKey:@"sendId"];
-                [params setObject:parameters[@"channelid"]?:@"null" forKey:@"channelId"];
+                [params SafetySetObject:parameters[@"msgtype"] forKey:@"msgType"];
+                [params SafetySetObject:parameters[@"sendid"] forKey:@"sendId"];
+                [params SafetySetObject:parameters[@"channelid"] forKey:@"channelId"];
                 
-                id getContactDisplayName = objc_msgSend(selfContact, @selector(getContactDisplayName));
-                id m_nsHeadImgUrl = objc_msgSend(selfContact, @selector(m_nsHeadImgUrl));
+                id getContactDisplayName = [selfContact getContactDisplayName];
+                id m_nsHeadImgUrl = [selfContact m_nsHeadImgUrl];
                 
-                [params setObject:getContactDisplayName forKey:@"nickName"];
-                [params setObject:m_nsHeadImgUrl forKey:@"headImg"];
-                [params setObject:[NSString stringWithFormat:@"%@", nativeUrl]?:@"null" forKey:@"nativeUrl"];
-                [params setObject:m_nsFromUsr?:@"null" forKey:@"sessionUserName"];
+                [params SafetySetObject:getContactDisplayName forKey:@"nickName"];
+                [params SafetySetObject:m_nsHeadImgUrl forKey:@"headImg"];
+                [params SafetySetObject:[NSString stringWithFormat:@"%@", nativeUrl] forKey:@"nativeUrl"];
+                [params SafetySetObject:m_nsFromUsr forKey:@"sessionUserName"];
+                
                 [RHUserDefaults setObject:params forKey:RHParamKey];
                 
-                [RHUserDefaults setBool:YES forKey:RHIsAutoOpenKey];
                 NSMutableDictionary* dictParam = [NSMutableDictionary dictionary];
                 /*    
                  agreeDuty = 0;
@@ -142,12 +116,12 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
                  wxpay://c2cbizmessagehandler/hongbao/receivehongbao?msgtype=1&channelid=1&sendid=1000039501201709047018482497054&sendusername=ljl4323108&ver=6&sign=4bee27fc5aeec1399701f05959a48100fbd01fb263d295dd29e13129b8d94c8939232ee668a1e68bf164ee9bead0f4ff14001333427f3a653519efa1578d6f74b7ee48ba20034727fb1c64105b91153c0891f0f29c979437c46f9e9b289a14a8
                  sendId = 1000039501201709047019673006344;
                  */
-                [dictParam setObject:@"0" forKey:@"agreeDuty"];                                             //agreeDuty
-                [dictParam setObject:parameters[@"channelid"]?:@"null" forKey:@"channelId"];        //channelId
-                [dictParam setObject:@"1" forKey:@"inWay"];                                                 //inWay
-                [dictParam setObject:parameters[@"msgtype"]?:@"null" forKey:@"msgType"];            //msgType
-                [dictParam setObject:nativeUrl forKey:@"nativeUrl"];                                     //nativeUrl
-                [dictParam setObject:parameters[@"sendid"]?:@"null" forKey:@"sendId"];              //sendId
+                [dictParam SafetySetObject:@"0" forKey:@"agreeDuty"];                                             //agreeDuty
+                [dictParam SafetySetObject:parameters[@"channelid"] forKey:@"channelId"];        //channelId
+                [dictParam SafetySetObject:@"1" forKey:@"inWay"];                                                 //inWay
+                [dictParam SafetySetObject:parameters[@"msgtype"] forKey:@"msgType"];            //msgType
+                [dictParam SafetySetObject:nativeUrl forKey:@"nativeUrl"];                                     //nativeUrl
+                [dictParam SafetySetObject:parameters[@"sendid"] forKey:@"sendId"];              //sendId
                 
                 NSLog(@"dictParam=%@", dictParam);
                 ((void (*)(id, SEL, NSMutableDictionary*))objc_msgSend)(logicMgr, @selector(ReceiverQueryRedEnvelopesRequest:), dictParam);
@@ -166,27 +140,36 @@ CHMethod(2, void, CMessageMgr, AsyncOnAddMsg, id, arg1, MsgWrap, id, arg2)
 
 CHDeclareClass(WCRedEnvelopesLogicMgr);
 
+CHOptimizedMethod1(self, void, WCRedEnvelopesLogicMgr, OpenRedEnvelopesRequest, id, arg1) {
+    NSLog(@"%@", arg1);
+    CHSuper1(WCRedEnvelopesLogicMgr, OpenRedEnvelopesRequest, arg1);
+}
+
 CHOptimizedMethod1(self, void, WCRedEnvelopesLogicMgr, ReceiverQueryRedEnvelopesRequest, id, arg1) {
     CHSuper1(WCRedEnvelopesLogicMgr, ReceiverQueryRedEnvelopesRequest, arg1);
 }
 
 CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonResponse, id, arg1, Request, id, arg2) {
+    NSLog(@"%@", arg1);
+    NSLog(@"%@", arg2);
+    /*
+     <HongBaoRes: 0x1123400f0>
+     <HongBaoReq: 0x1123805f0>
+     */
+    
     CHSuper2(WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonResponse, arg1, Request, arg2);
     
-    [RHUserDefaults setBool:YES forKey:RHIsAutoOpenKey];
     if ([RHUserDefaults boolForKey:RHIsAutoOpenKey]) {
         if ([NSStringFromClass([arg1 class]) isEqualToString:@"HongBaoRes"]) {
             NSData *data = [[arg1 retText] buffer];
             
-            if (nil != data && 0 < [data length])
-            {
+            if (nil != data && 0 < [data length]) {
                 NSError* error = nil;
                 id jsonObj = [NSJSONSerialization JSONObjectWithData:data
                                                              options:NSJSONReadingAllowFragments
                                                                error:&error];
-                if (nil != error)
-                {
-                    NSLog(@"HongBaoRes, json-error=%@", [error localizedDescription]);
+                if (nil != error) {
+                    NSLog(@"error %@", [error localizedDescription]);
                 }
                 else if (nil != jsonObj)
                 {
@@ -196,19 +179,13 @@ CHOptimizedMethod2(self, void, WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonRespon
                             if (idTemp) {
                                 NSMutableDictionary *params = [[RHUserDefaults objectForKey:RHParamKey] mutableCopy];
                                 [RHUserDefaults setObject:[NSMutableDictionary dictionary] forKey:RHParamKey];
-                                [params setObject:idTemp forKey:@"timingIdentifier"]; // "timingIdentifier"字段
+                                [params SafetySetObject:idTemp forKey:@"timingIdentifier"]; // "timingIdentifier"字段
                                 
-                                //微信的服务中心
-                                Method methodMMServiceCenter = class_getClassMethod(objc_getClass("MMServiceCenter"), @selector(defaultCenter));
-                                IMP impMMSC = method_getImplementation(methodMMServiceCenter);
-                                id MMServiceCenter = impMMSC(objc_getClass("MMServiceCenter"), @selector(defaultCenter));
-                                //红包控制器
-                                id logicMgr = ((id (*)(id, SEL, Class))objc_msgSend)(MMServiceCenter, @selector(getService:),objc_getClass("WCRedEnvelopesLogicMgr"));
+                                id logicMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("WCRedEnvelopesLogicMgr")];
                                 
-                                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
-                                dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+                                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+                                dispatch_after(delayTime, dispatch_get_main_queue(), ^(void) {
                                     ((void (*)(id, SEL, NSMutableDictionary*))objc_msgSend)(logicMgr, @selector(OpenRedEnvelopesRequest:), params);
-                                    [RHUserDefaults setBool:NO forKey:RHIsAutoOpenKey];
                                 });
                             }
                         }
@@ -247,6 +224,7 @@ CHConstructor{
     CHLoadLateClass(WCRedEnvelopesLogicMgr);
     CHClassHook2(WCRedEnvelopesLogicMgr, OnWCToHongbaoCommonResponse, Request);
     CHClassHook1(WCRedEnvelopesLogicMgr, ReceiverQueryRedEnvelopesRequest);
+    CHClassHook1(WCRedEnvelopesLogicMgr, OpenRedEnvelopesRequest);
     
     CHLoadLateClass(NewSettingViewController);
     CHClassHook0(NewSettingViewController, reloadTableData);

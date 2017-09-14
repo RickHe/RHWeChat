@@ -23,10 +23,11 @@
 
 @end
 
-@interface WCRedEnvelopesLogicMgr
+@interface WCRedEnvelopesLogicMgr : NSObject
 
 - (void)OnWCToHongbaoCommonResponse:(id)arg1 Request:(id)arg2;
 - (void)ReceiverQueryRedEnvelopesRequest:(id)arg1;
+- (void)OpenRedEnvelopesRequest:(id)arg1;
 
 @property(nonatomic) int cgiCmdid; // @dynamic cgiCmdid;
 @property(retain, nonatomic) NSString *errorMsg; // @dynamic errorMsg;
@@ -34,6 +35,36 @@
 @property(retain, nonatomic) NSString *platMsg; // @dynamic platMsg;
 @property(nonatomic) int platRet; // @dynamic platRet;
 @property(retain, nonatomic) SKBuiltinBuffer_t *retText; // @dynamic retText;
+
+@end
+
+@interface MMServiceCenter : NSObject
+
++ (id)defaultCenter;
+- (id)getService:(Class)class;
+
+@end
+
+@interface CMessageWrap : NSObject
+
+@property(nonatomic) unsigned int m_uiMessageType; // @synthesize m_uiMessageType;
+@property(retain, nonatomic) NSString *m_nsFromUsr; // @synthesize m_nsFromUsr;
+@property(retain, nonatomic) NSString *m_nsContent; // @synthesize m_nsContent;
+
+@end
+
+@interface CBaseContact : NSObject
+
+@property(retain, nonatomic) NSString *m_nsUsrName; // @synthesize m_nsUsrName;
+@property(retain, nonatomic) NSString *m_nsHeadImgUrl; // @synthesize m_nsHeadImgUrl;
+
+- (id)getContactDisplayName;
+
+@end
+
+@interface CContactMgr : NSObject
+
+- (id)getSelfContact;
 
 @end
 
