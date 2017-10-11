@@ -8,7 +8,7 @@
 * [cycript](http://www.cycript.org/)
 
 ### 插件使用方法：
-* 打开自动抢红包开关，默认关闭
+* 点击设置进去，打开自动抢红包开关，默认关闭
 
 ![2017-10-11 19_15_00ss.gif](http://upload-images.jianshu.io/upload_images/1192292-1f12a759957bbb44.gif?imageMogr2/auto-orient/strip)
 
